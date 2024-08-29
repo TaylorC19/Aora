@@ -1,7 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
-import { Slot, Stack } from 'expo-router'
+import { SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
+
+SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -19,8 +21,10 @@ const RootLayout = () => {
   useEffect(() => {
     if(error) throw error;
 
-    
+    if(fontsLoaded) SplashScreen.hideAsync();
   }, [fontsLoaded, error])
+
+  if(!fontsLoaded && !error) return null;
 
   return (
     <Stack>
